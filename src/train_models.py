@@ -93,9 +93,10 @@ def train_all_models(X, y):
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(dl_model.parameters(), lr=0.001)
 
+
+    print("going to start train_loader loop")
     for epoch in range(5):  # small epoch for example
         for xb, yb in train_loader:
-            print("inside train_loader loop")
             optimizer.zero_grad()
             preds = dl_model(xb)
             loss = criterion(preds, yb)

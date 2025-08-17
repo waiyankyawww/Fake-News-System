@@ -12,10 +12,10 @@ X_train, X_test, y_train, y_test = load_and_preprocess("/Users/waiyankyaw/Deskto
 
 # 2. Extract all features
 feature_funcs = {
-    "BoW": bow_features,
-    "TFIDF": tfidf_features,
-    "Word2Vec": w2v_features,
-    "GloVe": glove_features,
+    # "BoW": bow_features,
+    # "TFIDF": tfidf_features,
+    # "Word2Vec": w2v_features,
+    # "GloVe": glove_features,
     "BERT": bert_features,
     "RoBERTa": roberta_features,
     "XLNet": xlnet_features
@@ -32,12 +32,28 @@ for feat_name, func in feature_funcs.items():
     trained_models[feat_name] = model_or_emb
     
     print(f"Training models on feature: {feat_name} ...")
-    results = train_all_models(X_tr, y_train)  # returns dict of model results
-    all_results[feat_name] = results["All_Models"]
-    trained_models[feat_name] = results["Trained_Models"]  # Save trained models for user input
+    # results = train_all_models(X_tr, y_train)  # returns dict of model results
+    # print("This is the type of results", type(results))
+    # print(results)
+
+    # all_results[feat_name] = results["All_Models"]
+    # trained_models[feat_name] = results["Trained_Models"]  # Save trained models for user input
+
+    trained_models_dict, results_dict = train_all_models(X_tr, y_train)
+
+
+    print("this is the type of vars", type(trained_models_dict), type(results_dict))
+    print("this is the result dict ", results_dict)
+    print("this is the trained model dict ", trained_models_dict)
+ 
+    # store them in your main dictionaries
+    all_results[feat_name] = results_dict
+    trained_models[feat_name] = trained_models_dict
+
+
 
     print(f"\nResults for Feature: {feat_name}")
-    for model_name, metrics in results["All_Models"].items():
+    for model_name, metrics in results_dict.items():
         print(f"{model_name} -> Accuracy: {metrics['accuracy']:.4f}, F1: {metrics['f1_score']:.4f}")
 
 # 3. User input prediction

@@ -5,6 +5,7 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from gensim.models import Word2Vec
 from transformers import BertTokenizer, BertModel, RobertaTokenizer, RobertaModel, XLNetTokenizer, XLNetModel
 import torch
+from pathlib import Path
 
 # BoW
 def bow_features(train_texts, test_texts):
@@ -57,10 +58,11 @@ def w2v_features(train_texts, test_texts):
 #     X = np.array([np.mean([embeddings[word] for word in words if word in embeddings] or [np.zeros(100)], axis=0) for words in tokenized])
 #     return X, embeddings
 
-
 # GloVe
-def glove_features(train_texts, test_texts, glove_path="data/raw/glove/glove.6B.100d.txt"):
+def glove_features(train_texts, test_texts):
     print("inside glove features function")
+    glove_path = Path(__file__).parent.parent / "data/raw/glove/glove.6B.100d.txt"
+    print("Thsi si the glove path", glove_path)
     embeddings = {}
     with open(glove_path, "r", encoding="utf-8") as f:
         for line in f:
