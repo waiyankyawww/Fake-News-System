@@ -1,9 +1,9 @@
 # notebooks/1_data_load_and_prep.py
-    import re
-    from pathlib import Path
-    import pandas as pd
-    import numpy as np
-    from sklearn.model_selection import train_test_split
+import re
+from pathlib import Path
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
 
 # CONFIG
 PROJECT_ROOT = Path(".").resolve()
@@ -91,6 +91,7 @@ else:
             continue
         df = df.copy()
         df['text'] = df[txtcol].astype(str).apply(clean_text)
+        # Map original labels to binary: 1 = fake, 0 = true
         label = 1 if 'fake' in csv.name.lower() else 0
         df['label'] = label
         df['source'] = csv.stem
