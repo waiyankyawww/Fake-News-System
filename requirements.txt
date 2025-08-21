@@ -1,6 +1,8 @@
 torch==2.8.0
-numpy
-scipy
+torchvision==0.23.0
+torchaudio==2.8.0
+numpy==1.26.1
+scipy==1.11.3
 pandas
 scikit-learn
 nltk
