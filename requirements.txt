@@ -1,6 +1,6 @@
-torch==2.5.1
-torchvision==0.22.0
-torchaudio==2.5.1
+torch==2.8.0
+torchvision==0.23.0
+torchaudio==2.8.0
 numpy
 pandas
 scikit-learn
