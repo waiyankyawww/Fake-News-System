@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+*.log
+venv/
+.venv/
+.git/
+.gitignore
+data/
+.cache/
+# If you plan to bake models into the image, remove these ignores:
+src/models/GloVe_transformer.pkl
+src/models/Word2Vec_transformer.pkl
