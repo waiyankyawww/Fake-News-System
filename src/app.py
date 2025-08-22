@@ -37,6 +37,12 @@ st.title("📰 Fake News Detector")
 st.write("Enter a news headline or text below to check if it is **real or fake**.")
 
 
+st.write("This is the models dictionary:")
+st.json({
+    "transformers": transformers,
+    "models": models_dict
+})
+
 nltk.download('stopwords')
 STOPWORDS = set(stopwords.words('english'))
 
@@ -58,6 +64,12 @@ if st.button("Check News"):
     else:
         user_text_clean = clean_text(user_text)
         overall_votes = []
+
+        st.write("This is the models dictionary:")
+        st.json({
+            "overall votes": overall_votes,
+            "feature list": feature_list
+        })
 
         for feat_name in feature_list:
             print(f"\nFeature: {feat_name}")
@@ -117,13 +129,17 @@ if st.button("Check News"):
 
                 print(f"{model_name} -> Prediction: {prediction}")
                 overall_votes.append(prediction)
-
+                
         # Final verdict (majority voting)
         vote_count = Counter(overall_votes)
         print("this is the number of vote_count", vote_count)
+        st.write("🔍 Debug - Overall votes:", overall_votes)
+        st.json(vote_count)   # nice formatting if it's a dict
+
         if not vote_count:  # safeguard if no votes
             st.error("❌ No predictions could be made. Please check your input or models.")
         else:
             final_result = vote_count.most_common(1)[0][0]
+            st.write("🔍 Debug - final_result:", final_result)
             label_map = {0: "Real ✅", 1: "Fake ❌"}
             st.subheader(f"Final Prediction is: {label_map[final_result]}")
