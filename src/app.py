@@ -108,28 +108,30 @@ if st.button("Check News"):
             if feat_name in ["BoW", "TFIDF"]:
             # Sparse vectorizer
                 user_vector = transformer.transform([user_text_clean])
-            elif feat_name == "Word2Vec":
-                words = user_text_clean.split()  # simple tokenization
-                vec_list = []
-                for w in words:
-                    if w in transformer.wv:  # check in word vectors
-                        vec_list.append(transformer.wv[w])
-                if vec_list:
-                    user_vector = np.mean(vec_list, axis=0).reshape(1, -1)
-                else:
-                    user_vector = np.zeros((1, transformer.vector_size))
-            elif feat_name in embedding_features:
-                # Convert text to embedding vector
-                words = user_text_clean.split()  # simple tokenization
-                vec_list = []
-                for w in words:
-                    if w in transformer:  # transformer here is the loaded embedding dict/model
-                        vec_list.append(transformer[w])
-                if vec_list:
-                    user_vector = np.mean(vec_list, axis=0).reshape(1, -1)  # average word vectors
-                else:
-                    # fallback if no word is in vocabulary
-                    user_vector = np.zeros((1, transformer.vector_size))  # adjust vector_size accordingly
+
+                # for word2Vec and the 
+            # elif feat_name == "Word2Vec":
+            #     words = user_text_clean.split()  # simple tokenization
+            #     vec_list = []
+            #     for w in words:
+            #         if w in transformer.wv:  # check in word vectors
+            #             vec_list.append(transformer.wv[w])
+            #     if vec_list:
+            #         user_vector = np.mean(vec_list, axis=0).reshape(1, -1)
+            #     else:
+            #         user_vector = np.zeros((1, transformer.vector_size))
+            # elif feat_name in embedding_features:
+            #     # Convert text to embedding vector
+            #     words = user_text_clean.split()  # simple tokenization
+            #     vec_list = []
+            #     for w in words:
+            #         if w in transformer:  # transformer here is the loaded embedding dict/model
+            #             vec_list.append(transformer[w])
+            #     if vec_list:
+            #         user_vector = np.mean(vec_list, axis=0).reshape(1, -1)  # average word vectors
+            #     else:
+            #         # fallback if no word is in vocabulary
+            #         user_vector = np.zeros((1, transformer.vector_size))  # adjust vector_size accordingly
             else:
                 # Placeholder fallback
                 user_vector = np.zeros((1, transformer.shape[1]))
