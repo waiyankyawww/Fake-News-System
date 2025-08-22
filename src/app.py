@@ -62,9 +62,6 @@ for feat_name in feature_list:
             "models":  models_dict[feat_name]
         })
         
-        # transformers[feat_name] = joblib.load(f"models/{feat_name}_transformer.pkl")
-        # models_dict[feat_name] = joblib.load(f"models/{feat_name}_models.pkl")
-        # print(f"{feat_name} loaded")
     except FileNotFoundError:
         print(f"Warning: Saved files for {feat_name} not found.")
         transformers[feat_name] = None
