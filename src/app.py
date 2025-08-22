@@ -94,11 +94,11 @@ if st.button("Check News"):
         user_text_clean = clean_text(user_text)
         overall_votes = []
 
-        st.write("This is the models dictionary:")
-        st.json({
-            "overall votes": overall_votes,
-            "feature list": feature_list
-        })
+        # st.write("This is the models dictionary:")
+        # st.json({
+        #     "overall votes": overall_votes,
+        #     "feature list": feature_list
+        # })
 
         for feat_name in feature_list:
             print(f"\nFeature: {feat_name}")
