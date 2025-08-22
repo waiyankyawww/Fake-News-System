@@ -12,7 +12,7 @@ from pathlib import Path
 
 
 PROJECT_ROOT = Path(".").resolve()
-MODEL_DIR = PROJECT_ROOT / "models"
+MODEL_DIR = PROJECT_ROOT / "src" / "models"
 
 
 # List of features

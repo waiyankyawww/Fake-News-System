@@ -12,8 +12,11 @@ from pathlib import Path
 
 
 PROJECT_ROOT = Path(".").resolve()
-MODEL_DIR = PROJECT_ROOT / "src" / "models"
-
+MODEL_DIR = PROJECT_ROOT / "models"
+st.write("This is the model directory")
+st.json({
+    "transformers": MODEL_DIR,
+})
 
 # List of features
 feature_list = ["BoW", "TFIDF", "Word2Vec", "GloVe"] 
