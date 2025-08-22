@@ -10,18 +10,8 @@ from nltk.corpus import stopwords
 import nltk
 from pathlib import Path
 
-
-PROJECT_ROOT = Path(".").resolve()
+PROJECT_ROOT = Path(__file__).parent.resolve()
 MODEL_DIR = PROJECT_ROOT / "models"
-
-PROJECT_ROOT2 = Path(__file__).parent.resolve()
-MODEL_DIR2 = PROJECT_ROOT2 / "models"
-
-
-st.write("PROJECT_ROOT2:", PROJECT_ROOT2)
-st.write("MODEL_DIR2:", MODEL_DIR2)
-st.write("Exists?", MODEL_DIR2.exists())
-st.write("Files:", list(MODEL_DIR2.glob("*")))
 
 
 st.write("PROJECT_ROOT:", PROJECT_ROOT)
@@ -37,8 +27,6 @@ embedding_features = ["GloVe"]
 transformers = {}
 models_dict = {}
 
-transformers2 = {}
-models_dict2 = {}
 
 
 for feat_name in feature_list:
@@ -48,28 +36,19 @@ for feat_name in feature_list:
         transformer_path = MODEL_DIR / f"{feat_name}_transformer.pkl"
         model_path = MODEL_DIR / f"{feat_name}_models.pkl"
 
-        transformer_path2 = MODEL_DIR2 / f"{feat_name}_transformer.pkl"
-        model_path2 = MODEL_DIR2 / f"{feat_name}_models.pkl"
+        st.write("transformer_path:", transformer_path)
+        st.write("model_path:", model_path)
+
         
         transformers[feat_name] = joblib.load(transformer_path)
         models_dict[feat_name] = joblib.load(model_path)
 
-        transformers2[feat_name] = joblib.load(transformer_path2)
-        models_dict2[feat_name] = joblib.load(model_path2)
 
         st.write("PROJECT_ROOT:")
         st.json({
             "transformers": transformers[feat_name],
             "models":  models_dict[feat_name]
         })
-
-        st.write("PROJECT_ROOT2:")
-        st.json({
-            "transformers": transformers2[feat_name],
-            "models":  models_dict2[feat_name]
-        })
-
-
         
         # transformers[feat_name] = joblib.load(f"models/{feat_name}_transformer.pkl")
         # models_dict[feat_name] = joblib.load(f"models/{feat_name}_models.pkl")
