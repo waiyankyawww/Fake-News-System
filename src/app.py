@@ -164,8 +164,8 @@ if st.button("Check News"):
         # Final verdict (majority voting)
         vote_count = Counter(overall_votes)
         print("this is the number of vote_count", vote_count)
-        st.write("🔍 Debug - Overall votes:", overall_votes)
-        st.json(vote_count)   # nice formatting if it's a dict
+        # st.write("🔍 Debug - Overall votes:", overall_votes)
+        # st.json(vote_count)   # nice formatting if it's a dict
 
         if not vote_count:  # safeguard if no votes
             st.error("❌ No predictions could be made. Please check your input or models.")
