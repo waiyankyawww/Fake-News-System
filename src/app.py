@@ -13,10 +13,21 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(".").resolve()
 MODEL_DIR = PROJECT_ROOT / "models"
-st.write("This is the model directory")
-st.json({
-    "transformers": MODEL_DIR,
-})
+
+PROJECT_ROOT2 = Path(__file__).parent.resolve()
+MODEL_DIR2 = PROJECT_ROOT2 / "models"
+
+
+st.write("PROJECT_ROOT2:", PROJECT_ROOT2)
+st.write("MODEL_DIR2:", MODEL_DIR2)
+st.write("Exists?", MODEL_DIR2.exists())
+st.write("Files:", list(MODEL_DIR2.glob("*")))
+
+
+st.write("PROJECT_ROOT:", PROJECT_ROOT)
+st.write("MODEL_DIR:", MODEL_DIR)
+st.write("Exists?", MODEL_DIR.exists())
+st.write("Files:", list(MODEL_DIR.glob("*")))
 
 # List of features
 feature_list = ["BoW", "TFIDF", "Word2Vec", "GloVe"] 
@@ -26,11 +37,43 @@ embedding_features = ["GloVe"]
 transformers = {}
 models_dict = {}
 
+transformers2 = {}
+models_dict2 = {}
+
+
 for feat_name in feature_list:
     try:
-        transformers[feat_name] = joblib.load(f"models/{feat_name}_transformer.pkl")
-        models_dict[feat_name] = joblib.load(f"models/{feat_name}_models.pkl")
-        print(f"{feat_name} loaded")
+
+
+        transformer_path = MODEL_DIR / f"{feat_name}_transformer.pkl"
+        model_path = MODEL_DIR / f"{feat_name}_models.pkl"
+
+        transformer_path2 = MODEL_DIR2 / f"{feat_name}_transformer.pkl"
+        model_path2 = MODEL_DIR2 / f"{feat_name}_models.pkl"
+        
+        transformers[feat_name] = joblib.load(transformer_path)
+        models_dict[feat_name] = joblib.load(model_path)
+
+        transformers2[feat_name] = joblib.load(transformer_path2)
+        models_dict2[feat_name] = joblib.load(model_path2)
+
+        st.write("PROJECT_ROOT:")
+        st.json({
+            "transformers": transformers[feat_name],
+            "models":  models_dict[feat_name]
+        })
+
+        st.write("PROJECT_ROOT2:")
+        st.json({
+            "transformers": transformers2[feat_name],
+            "models":  models_dict2[feat_name]
+        })
+
+
+        
+        # transformers[feat_name] = joblib.load(f"models/{feat_name}_transformer.pkl")
+        # models_dict[feat_name] = joblib.load(f"models/{feat_name}_models.pkl")
+        # print(f"{feat_name} loaded")
     except FileNotFoundError:
         print(f"Warning: Saved files for {feat_name} not found.")
         transformers[feat_name] = None
