@@ -42,6 +42,7 @@ def get_features(texts, tokenizer, model, batch_size):
 def bow_features(train_texts, test_texts):
     print("inside bow features function")
     vectorizer = CountVectorizer(max_features=5000)
+    vectorizer.fit(train_texts)
     X_train_bow = vectorizer.fit_transform(train_texts)
     X_test_bow = vectorizer.transform(test_texts)
     return X_train_bow, X_test_bow, vectorizer
@@ -50,6 +51,7 @@ def bow_features(train_texts, test_texts):
 def tfidf_features(train_texts, test_texts):
     print("inside tfidf features function")
     vectorizer = TfidfVectorizer(max_features=5000)
+    vectorizer.fit(train_texts)
     X_train_tfidf = vectorizer.fit_transform(train_texts)
     X_test_tfidf = vectorizer.transform(test_texts)
     return X_train_tfidf, X_test_tfidf, vectorizer

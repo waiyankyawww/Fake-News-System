@@ -21,10 +21,10 @@ X_train, X_test, y_train, y_test = load_and_preprocess(csv_path)
 
 # 2. Extract all features
 feature_funcs = {
-    # "BoW": bow_features,
-    # "TFIDF": tfidf_features,
+    "BoW": bow_features,
+    "TFIDF": tfidf_features,
     # "Word2Vec": w2v_features,
-    "GloVe": glove_features,
+    # "GloVe": glove_features,
     # below are too heavy to run on the CPU
     # "BERT": bert_features,  
     # "RoBERTa": roberta_features,

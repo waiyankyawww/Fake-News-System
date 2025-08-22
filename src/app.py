@@ -27,6 +27,15 @@ embedding_features = ["GloVe"]
 transformers = {}
 models_dict = {}
 
+MODEL_DIR = Path(__file__).parent / "models"
+tfidf_path = MODEL_DIR / "TFIDF_transformer.pkl"
+
+st.write("TFIDF path:", tfidf_path)
+st.write("Exists?", tfidf_path.exists())
+
+
+
+
 
 
 for feat_name in feature_list:
@@ -36,12 +45,15 @@ for feat_name in feature_list:
         transformer_path = MODEL_DIR / f"{feat_name}_transformer.pkl"
         model_path = MODEL_DIR / f"{feat_name}_models.pkl"
 
-        st.write("transformer_path:", transformer_path)
-        st.write("model_path:", model_path)
+        st.write("transformer_path: for ", feat_name,  transformer_path)
+        st.write("model_path:",feat_name,  model_path)
 
         
         transformers[feat_name] = joblib.load(transformer_path)
         models_dict[feat_name] = joblib.load(model_path)
+
+        transformer = joblib.load(transformer_path)
+
 
 
         st.write("PROJECT_ROOT:")
