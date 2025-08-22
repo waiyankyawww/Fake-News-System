@@ -14,10 +14,10 @@ PROJECT_ROOT = Path(__file__).parent.resolve()
 MODEL_DIR = PROJECT_ROOT / "models"
 
 
-st.write("PROJECT_ROOT:", PROJECT_ROOT)
-st.write("MODEL_DIR:", MODEL_DIR)
-st.write("Exists?", MODEL_DIR.exists())
-st.write("Files:", list(MODEL_DIR.glob("*")))
+# st.write("PROJECT_ROOT:", PROJECT_ROOT)
+# st.write("MODEL_DIR:", MODEL_DIR)
+# st.write("Exists?", MODEL_DIR.exists())
+# st.write("Files:", list(MODEL_DIR.glob("*")))
 
 # List of features
 feature_list = ["BoW", "TFIDF", "Word2Vec", "GloVe"] 
@@ -30,13 +30,8 @@ models_dict = {}
 MODEL_DIR = Path(__file__).parent / "models"
 tfidf_path = MODEL_DIR / "TFIDF_transformer.pkl"
 
-st.write("TFIDF path:", tfidf_path)
-st.write("Exists?", tfidf_path.exists())
-
-
-
-
-
+# st.write("TFIDF path:", tfidf_path)
+# st.write("Exists?", tfidf_path.exists())
 
 for feat_name in feature_list:
     try:
@@ -45,8 +40,8 @@ for feat_name in feature_list:
         transformer_path = MODEL_DIR / f"{feat_name}_transformer.pkl"
         model_path = MODEL_DIR / f"{feat_name}_models.pkl"
 
-        st.write("transformer_path: for ", feat_name,  transformer_path)
-        st.write("model_path:",feat_name,  model_path)
+        # st.write("transformer_path: for ", feat_name,  transformer_path)
+        # st.write("model_path:",feat_name,  model_path)
 
         
         transformers[feat_name] = joblib.load(transformer_path)
@@ -56,11 +51,11 @@ for feat_name in feature_list:
 
 
 
-        st.write("PROJECT_ROOT:")
-        st.json({
-            "transformers": transformers[feat_name],
-            "models":  models_dict[feat_name]
-        })
+        # st.write("PROJECT_ROOT:")
+        # st.json({
+        #     "transformers": transformers[feat_name],
+        #     "models":  models_dict[feat_name]
+        # })
         
     except FileNotFoundError:
         print(f"Warning: Saved files for {feat_name} not found.")
@@ -71,11 +66,11 @@ st.title("📰 Fake News Detector")
 st.write("Enter a news headline or text below to check if it is **real or fake**.")
 
 
-st.write("This is the models dictionary:")
-st.json({
-    "transformers": transformers,
-    "models": models_dict
-})
+# st.write("This is the models dictionary:")
+# st.json({
+#     "transformers": transformers,
+#     "models": models_dict
+# })
 
 nltk.download('stopwords')
 STOPWORDS = set(stopwords.words('english'))
@@ -119,28 +114,28 @@ if st.button("Check News"):
                 user_vector = transformer.transform([user_text_clean])
 
                 # for word2Vec and the 
-            # elif feat_name == "Word2Vec":
-            #     words = user_text_clean.split()  # simple tokenization
-            #     vec_list = []
-            #     for w in words:
-            #         if w in transformer.wv:  # check in word vectors
-            #             vec_list.append(transformer.wv[w])
-            #     if vec_list:
-            #         user_vector = np.mean(vec_list, axis=0).reshape(1, -1)
-            #     else:
-            #         user_vector = np.zeros((1, transformer.vector_size))
-            # elif feat_name in embedding_features:
-            #     # Convert text to embedding vector
-            #     words = user_text_clean.split()  # simple tokenization
-            #     vec_list = []
-            #     for w in words:
-            #         if w in transformer:  # transformer here is the loaded embedding dict/model
-            #             vec_list.append(transformer[w])
-            #     if vec_list:
-            #         user_vector = np.mean(vec_list, axis=0).reshape(1, -1)  # average word vectors
-            #     else:
-            #         # fallback if no word is in vocabulary
-            #         user_vector = np.zeros((1, transformer.vector_size))  # adjust vector_size accordingly
+            elif feat_name == "Word2Vec":
+                words = user_text_clean.split()  # simple tokenization
+                vec_list = []
+                for w in words:
+                    if w in transformer.wv:  # check in word vectors
+                        vec_list.append(transformer.wv[w])
+                if vec_list:
+                    user_vector = np.mean(vec_list, axis=0).reshape(1, -1)
+                else:
+                    user_vector = np.zeros((1, transformer.vector_size))
+            elif feat_name in embedding_features:
+                # Convert text to embedding vector
+                words = user_text_clean.split()  # simple tokenization
+                vec_list = []
+                for w in words:
+                    if w in transformer:  # transformer here is the loaded embedding dict/model
+                        vec_list.append(transformer[w])
+                if vec_list:
+                    user_vector = np.mean(vec_list, axis=0).reshape(1, -1)  # average word vectors
+                else:
+                    # fallback if no word is in vocabulary
+                    user_vector = np.zeros((1, transformer.vector_size))  # adjust vector_size accordingly
             else:
                 # Placeholder fallback
                 user_vector = np.zeros((1, transformer.shape[1]))
