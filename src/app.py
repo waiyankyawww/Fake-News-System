@@ -120,7 +120,10 @@ if st.button("Check News"):
 
         # Final verdict (majority voting)
         vote_count = Counter(overall_votes)
-        final_result = vote_count.most_common(1)[0][0]
-        label_map = {0: "Real ✅", 1: "Fake ❌"}
-
-        st.subheader(f"### 🏆 Final Prediction is: {label_map[final_result]}")
+        print("this is the number of vote_count", vote_count)
+        if not vote_count:  # safeguard if no votes
+            st.error("❌ No predictions could be made. Please check your input or models.")
+        else:
+            final_result = vote_count.most_common(1)[0][0]
+            label_map = {0: "Real ✅", 1: "Fake ❌"}
+            st.subheader(f"Final Prediction is: {label_map[final_result]}")
